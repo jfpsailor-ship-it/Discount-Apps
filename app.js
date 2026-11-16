@@ -75,8 +75,8 @@
 
   function loadData() {
     return Promise.all([idbGet('stock'), idbGet('discounts')]).then(function (loc) {
-      var pS = loc[0] ? Promise.resolve(loc[0]) : fetchJSON('data/stock.json');
-      var pD = loc[1] ? Promise.resolve(loc[1]) : fetchJSON('data/discounts.json');
+      var pS = loc[0] ? Promise.resolve(loc[0]) : fetchJSON('stock.json');
+      var pD = loc[1] ? Promise.resolve(loc[1]) : fetchJSON('discounts.json');
       S.src.stock = loc[0] ? 'phone' : 'github'; S.src.disc = loc[1] ? 'phone' : 'github';
       return Promise.all([pS, pD]);
     }).then(function (x) {
@@ -492,7 +492,7 @@
 
   function loadXLSX() {
     if (window.XLSX) return Promise.resolve();
-    return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = 'libs/xlsx.min.js'; s.onload = res; s.onerror = function () { rej(new Error('Excel লাইব্রেরি লোড হয়নি (ইন্টারনেট লাগবে)')); }; document.head.appendChild(s); });
+    return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = 'xlsx.min.js'; s.onload = res; s.onerror = function () { rej(new Error('Excel লাইব্রেরি লোড হয়নি (ইন্টারনেট লাগবে)')); }; document.head.appendChild(s); });
   }
   function readFile(f) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(new Uint8Array(r.result)); }; r.onerror = rej; r.readAsArrayBuffer(f); }); }
   function prev(el, msg, ok) { el.className = 'prev ' + (ok ? 'ok' : 'err'); el.textContent = msg; }
